@@ -23,6 +23,9 @@ console.log("auth_clientId", auth_clientId)
 console.log("auth_scope", auth_scope)
 console.log("api_audience", api_audience)
 
+console.log("window.location.origin", window.location.origin)
+
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
@@ -31,7 +34,7 @@ root.render(
       domain={auth_domain}  
       clientId={auth_clientId}
       authorizationParams={{
-        redirect_uri: window.location.origin,
+        redirect_uri: window.location.origin + "/quid3_react", // where we want redirection after authentication
         audience:api_audience, 
         scope:auth_scope 
       }}
