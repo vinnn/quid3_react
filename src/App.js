@@ -12,7 +12,7 @@ function App() {
   return (
     <div className="App">
 
-      <BrowserRouter>
+      <BrowserRouter basename="/quid3_react">
         <NavBar />
 
         <Routes>
