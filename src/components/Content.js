@@ -27,8 +27,6 @@ const Content = () => {
                     },
                 });
 
-                console.log("tok", accessToken)
-
                 const response = await fetch(API_URL + "/qandas/", {
                     headers: {
                         Authorization: `Bearer ${accessToken}`,
