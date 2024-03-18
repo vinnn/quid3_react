@@ -1,6 +1,7 @@
 {
   "name": "reactpwa",
   "version": "0.1.0",
+  "homepage": "https://vinnn.github.io/quid3_react",
   "private": true,
   "dependencies": {
     "@auth0/auth0-react": "^2.2.4",
@@ -28,6 +29,8 @@
     "yup": "^1.4.0"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -50,5 +53,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "gh-pages": "^6.1.1"
   }
 }
