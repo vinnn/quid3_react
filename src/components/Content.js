@@ -10,7 +10,7 @@ import { REACT_APP_API_AUDIENCE, REACT_APP_AUTH0_SCOPE, REACT_APP_API_SERVER_URL
 
 const API_AUDIENCE = REACT_APP_API_AUDIENCE;
 const AUTH_SCOPE = REACT_APP_AUTH0_SCOPE;
-const API_URL = REACT_APP_API_SERVER_URL
+const API_URL = REACT_APP_API_SERVER_URL;
 
 const Content = () => {
     const { isAuthenticated, getAccessTokenSilently } = useAuth0();
