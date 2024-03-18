@@ -34,7 +34,7 @@ root.render(
       domain={auth_domain}  
       clientId={auth_clientId}
       authorizationParams={{
-        redirect_uri: window.location.origin + "/quid3_react", // where we want redirection after authentication
+        redirect_uri: window.location.origin, // + "/quid3_react", // where we want redirection after authentication
         audience:api_audience, 
         scope:auth_scope 
       }}
