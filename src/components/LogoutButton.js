@@ -6,7 +6,7 @@ const LogoutButton = () => {
 
     return (
         <button onClick={() => logout({
-            logoutParams: { returnTo: window.location.origin }
+            logoutParams: { returnTo: window.location.origin + "/quid3_react" }
          })}
         >
             Log Out
