@@ -2,22 +2,26 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import NavBar from './components/NavBar';
 import Home from './components/Home';
-import Shop from './components/Shop';
+import Play from './components/Play';
+import Stats from './components/Stats';
+import Table from './components/Table';
+import Create from './components/Create';
+import { REACT_ROUTER_BASENAME } from "./config"
 
-
-// import logo from './logo.svg';
-// import './App.css';
 
 function App() {
   return (
     <div className="App">
 
-      <BrowserRouter basename="/quid3_react">
+      <BrowserRouter basename={REACT_ROUTER_BASENAME}>
         <NavBar />
 
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/shop" element={<Shop />} />
+          <Route path="/play" element={<Play />} />
+          <Route path="/stats" element={<Stats />} />
+          <Route path="/table" element={<Table />} />
+          <Route path="/create" element={<Create />} />
         </Routes>
 
       

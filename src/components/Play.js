@@ -1,11 +1,10 @@
 
 
-
-export default function Home() {
+export default function Play() {
 
     return (
         <div>
-            HOME
+            PLAY
         </div>
     )
 }

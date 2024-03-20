@@ -5,38 +5,26 @@ import App from './App';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
 import { Auth0Provider } from '@auth0/auth0-react';
-import { REACT_APP_API_AUDIENCE, REACT_APP_AUTH0_SCOPE, REACT_APP_AUTH0_DOMAIN, REACT_APP_AUTH0_CLIENT_ID } from "./config"
-
-// const auth_domain = process.env.REACT_APP_AUTH0_DOMAIN;
-// const auth_clientId = process.env.REACT_APP_AUTH0_CLIENT_ID;
-// const auth_scope = process.env.REACT_APP_AUTH0_SCOPE;
-// const api_audience = process.env.REACT_APP_API_AUDIENCE;
+import { REACT_APP_API_AUDIENCE, REACT_APP_AUTH0_SCOPE, REACT_APP_AUTH0_DOMAIN, REACT_APP_AUTH0_CLIENT_ID, REACT_ROUTER_BASENAME } from "./config"
 
 
-const auth_domain = REACT_APP_AUTH0_DOMAIN;
-const auth_clientId = REACT_APP_AUTH0_CLIENT_ID;
-const auth_scope = REACT_APP_AUTH0_SCOPE;
-const api_audience = REACT_APP_API_AUDIENCE;
-
-console.log("auth_domain", auth_domain)
-console.log("auth_clientId", auth_clientId)
-console.log("auth_scope", auth_scope)
-console.log("api_audience", api_audience)
-
-console.log("window.location.origin", window.location.origin)
-
+const AUTH_DOMAIN = REACT_APP_AUTH0_DOMAIN;
+const AUTH_CLIENT_ID = REACT_APP_AUTH0_CLIENT_ID;
+const AUTH_SCOPE = REACT_APP_AUTH0_SCOPE;
+const API_AUDIENCE = REACT_APP_API_AUDIENCE;
+const REACT_APP_REDIRECT_URI=window.location.origin + REACT_ROUTER_BASENAME
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
   <React.StrictMode>
     <Auth0Provider
-      domain={auth_domain}  
-      clientId={auth_clientId}
+      domain={AUTH_DOMAIN}  
+      clientId={AUTH_CLIENT_ID}
       authorizationParams={{
-        redirect_uri: window.location.origin + "/quid3_react", // where we want redirection after authentication
-        audience:api_audience, 
-        scope:auth_scope 
+        redirect_uri: REACT_APP_REDIRECT_URI, // where we want redirection after authentication
+        audience:API_AUDIENCE, 
+        scope:AUTH_SCOPE
       }}
       >
 

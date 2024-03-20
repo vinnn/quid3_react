@@ -1,11 +1,10 @@
 
 
-
-export default function Home() {
+export default function Stats() {
 
     return (
         <div>
-            HOME
+            STATS
         </div>
     )
 }

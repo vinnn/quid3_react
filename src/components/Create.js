@@ -5,9 +5,7 @@ import * as Yup from 'yup';
 import { useAuth0 } from "@auth0/auth0-react";
 import { REACT_APP_API_AUDIENCE, REACT_APP_AUTH0_SCOPE, REACT_APP_API_SERVER_URL } from "../config"
 
-// const API_AUDIENCE = process.env.REACT_APP_API_AUDIENCE;
-// const AUTH_SCOPE = process.env.REACT_APP_AUTH0_SCOPE;
-// const API_URL = process.env.REACT_APP_API_SERVER_URL
+
 
 const API_AUDIENCE = REACT_APP_API_AUDIENCE;
 const AUTH_SCOPE = REACT_APP_AUTH0_SCOPE;
