@@ -123,7 +123,6 @@ const Create = () => {
         initialValues={{
           question: '',
           answer: '',
-          email: '',
           acceptedTerms: false, // added for our checkbox
           jobType: '', // added for our select
         }}
@@ -152,17 +151,17 @@ const Create = () => {
 
         <Form>
           <MyTextInput
-            label="The question"
+            label="Question"
             name="question"
             type="text"
-            placeholder="Jane"
+            placeholder="question"
           />
 
           <MyTextInput
-            label="The answer"
+            label="Answer"
             name="answer"
             type="text"
-            placeholder="Doe"
+            placeholder="answer"
           />
 
           <MyTextInput

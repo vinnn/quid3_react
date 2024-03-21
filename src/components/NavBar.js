@@ -1,11 +1,7 @@
-import LoginButton from "./LoginButton";
 import LogoutButton from "./LogoutButton";
-// import ViewTableButton from "./ViewTableButton";
-// import HomeButton from "./HomeButton";
 import Profile from "./Profile";
 import { useAuth0 } from "@auth0/auth0-react";
 import { NavLink, useLocation } from "react-router-dom";
-
 
 
 export default function NavBar() {
@@ -37,57 +33,18 @@ export default function NavBar() {
                                 <NavLink style={location.pathname === "/stats" ? selectedTabStyle:{}} to="/stats">Stats</NavLink>
                             </li>                            
                             <li>
-                                <NavLink style={location.pathname === "/table" ? selectedTabStyle:{}} to="/table">Table</NavLink>
-                            </li>
-                            <li>
-                                <NavLink style={location.pathname === "/create" ? selectedTabStyle:{}} to="/create">Create</NavLink>
-                            </li>                        
+                                <NavLink style={location.pathname === "/admin" ? selectedTabStyle:{}} to="/admin">Admin</NavLink>
+                            </li>                      
                         </ul>
                     </nav>
                     <LogoutButton />
                 </div>
-            ) : (
-                <div className="flex flex-row justify-center align-middle items-center">            
-                    <LoginButton />
-                </div>
-            )}
+            ) : null }
+
         </div>
     )
 }
 
-
-
-
-
-
-
-
-
-// export default function NavBar() {
-
-//     const { isAuthenticated, isLoading } = useAuth0();
-
-//     console.log("in NavBar")    
-//     console.log("window.location.pathname", window.location.pathname)
-
-//     return (          
-//         <div className="border-solid border-2 border-indigo-600">
-
-//             {isAuthenticated ? ( 
-//                 <div className="flex flex-row justify-between align-middle items-center">
-//                     <Profile />
-//                     <HomeButton />
-//                     {window.location.pathname!="/table"?<ViewTableButton />:null}
-//                     <LogoutButton />
-//                 </div>
-//             ) : (
-//                 <div className="flex flex-row justify-center align-middle items-center">            
-//                     <LoginButton />
-//                 </div>
-//             )}
-//         </div>
-//     )
-// }
 
 
 
