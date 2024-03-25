@@ -1,7 +1,8 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, NavLink, useLocation } from 'react-router-dom';
-import { useAuth0 } from "@auth0/auth0-react";
-import LoginButton from "./components/LoginButton";
+import { useSelector } from 'react-redux';
+
+import LoginButton from "./features/auth/LoginButton";
 import AppNavBar from './components/AppNavBar/AppNavBar';
 import Home from './components/Home/Home';
 import Play from './components/Play/Play';
@@ -13,22 +14,13 @@ import Categories from "./components/Admin/Categories";
 import Games from "./components/Admin/Games";
 import { REACT_ROUTER_BASENAME } from "./config"
 
-import useAuthListener from './redux/useAuthListener'
-import { useSelector } from 'react-redux';
+import useAuthListener from './features/auth/useAuthListener'
+import { authState } from './features/auth/authSlice'
+
 
 function App() {
-
-  // const { isAuthenticated } = useAuth0();
-
-
   const auth = useAuthListener()   // Listening if Auth state has changed
-  const { isAuthenticated, isLoading } = useSelector(state=>state.auth)
-
-
-
-  // <Route path=  ** omit the '/' for relative paths
-  // nested routes under /admin:
-  //    associated element will be rendered where a <Outlet> is included (as long as it is included within the element of the parent route, ie <Admin>)(I)
+  const { isAuthenticated, isLoading } = useSelector(authState)
 
   return (
     <div className="App">
@@ -63,3 +55,9 @@ function App() {
 }
 
 export default App;
+
+
+// NOTES::
+// <Route path=  ** omit the '/' for relative paths
+// nested routes under /admin:
+//    associated element will be rendered where a <Outlet> is included (as long as it is included within the element of the parent route, ie <Admin>)(I)

@@ -1,19 +1,12 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import React from "react";
-
-import useAuthListener from '../../redux/useAuthListener'
+import { authState } from '../../features/auth/authSlice'
 import { useSelector } from 'react-redux';
 
-
 const Profile = () => {
-  // const { user, isAuthenticated, isLoading } = useAuth0();
-
-  const auth = useAuthListener()
-  const { isAuthenticated, isLoading, user } = useSelector(state=>state.auth)
-
+  const { isAuthenticated, isLoading, user } = useSelector(authState)
 
   console.log("user", user)
-
 
   if (isLoading) {
     return <div>Loading ...</div>;

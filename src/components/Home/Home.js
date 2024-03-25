@@ -1,4 +1,3 @@
-import { Counter } from '../../redux/Counter'
 
 
 export default function Home() {
@@ -6,7 +5,7 @@ export default function Home() {
     return (
         <div>
             HOME
-            <Counter />
+            {/* <Counter /> */}
         </div>
     )
 }

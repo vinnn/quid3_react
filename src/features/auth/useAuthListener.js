@@ -9,10 +9,11 @@ const useAuthListener = () => {
     const dispatch = useDispatch()
     useEffect(() => {
         // !!!! DISPATCH ==> CHANGES THE STATE WITH ACTION  (setAuthSlice)
-        dispatch(setAuthState({isAuthenticated, isLoading, user}))
+        dispatch( setAuthState( {isAuthenticated, isLoading, user} ) )
     }, [dispatch, isAuthenticated, isLoading, user])
 
     return {isLoading, isAuthenticated}
 }
 
 export default useAuthListener;
+

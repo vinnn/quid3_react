@@ -1,15 +1,13 @@
-import LogoutButton from "./LogoutButton";
-import Profile from "./Profile";
-import { useAuth0 } from "@auth0/auth0-react";
-import { NavLink, useLocation } from "react-router-dom";
-
 import { useSelector } from 'react-redux';
+import { NavLink } from "react-router-dom";
+
+import LogoutButton from "../../features/auth/LogoutButton";
+import UserProfile from "../../features/auth/UserProfile";
+import { authState } from "../../features/auth/authSlice"
 
 
 export default function AppNavBar() {
-
-    // const { isAuthenticated } = useAuth0();
-    const { isAuthenticated, isLoading } = useSelector(state=>state.auth)
+    const { isAuthenticated, isLoading } = useSelector(authState)
 
     const setLinkActiveStyle = (isActive) => {
         return {
@@ -23,7 +21,7 @@ export default function AppNavBar() {
 
             {isAuthenticated ? ( 
                 <div className="flex flex-row justify-between align-middle items-center">
-                    <Profile />
+                    <UserProfile />
                     <nav variant="pills" className="navbar" style={{ borderBottom: "1px solid white" }}>
                         <ul className="nav nav-pills flex flex-row gap-3">
                             <li>
