@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Formik, Form, useField } from 'formik';
 import * as Yup from 'yup';
 import { useAuth0 } from "@auth0/auth0-react";
-import { REACT_APP_API_AUDIENCE, REACT_APP_AUTH0_SCOPE, REACT_APP_API_SERVER_URL } from "../config"
+import { REACT_APP_API_AUDIENCE, REACT_APP_AUTH0_SCOPE, REACT_APP_API_SERVER_URL } from "../../config"
 
 
 
@@ -18,29 +18,9 @@ const MyTextInput = ({ label, ...props }) => {
   // message if the field is invalid and it has been touched (i.e. visited)
   const [field, meta] = useField(props);
   return (
-    <>
+    <div className="flex flex-row items-center gap-4">
       <label htmlFor={props.id || props.name}>{label}</label>
-      <input className="text-input" {...field} {...props} />
-      {meta.touched && meta.error ? (
-        <div className="error">{meta.error}</div>
-      ) : null}
-    </>
-  );
-};
-
-const MyCheckbox = ({ children, ...props }) => {
-  // React treats radios and checkbox inputs differently from other input 
-  // types: select and textarea.
-  // Formik does this too! When you specify `type` to useField(), it will
-  // return the correct bag of props for you -- a `checked` prop will be 
-  // included in `field` alongside `name`, `value`, `onChange`, and `onBlur`
-  const [field, meta] = useField({ ...props, type: 'checkbox' });
-  return (
-    <div>
-      <label className="checkbox-input">
-        <input type="checkbox" {...field} {...props} />
-        {children}
-      </label>
+      <input className="text-input text-center" {...field} {...props} />
       {meta.touched && meta.error ? (
         <div className="error">{meta.error}</div>
       ) : null}
@@ -49,29 +29,26 @@ const MyCheckbox = ({ children, ...props }) => {
 };
 
 const MySelect = ({ label, ...props }) => {
-  const [field, meta] = useField(props);
-  return (
-    <div>
-      <label htmlFor={props.id || props.name}>{label}</label>
-      <select {...field} {...props} />
-      {meta.touched && meta.error ? (
-        <div className="error">{meta.error}</div>
-      ) : null}
-    </div>
-  );
-};
-
+    const [field, meta] = useField(props);
+    return (
+      <div>
+        <label htmlFor={props.id || props.name}>{label}</label>
+        <select {...field} {...props} />
+        {meta.touched && meta.error ? (
+          <div className="error">{meta.error}</div>
+        ) : null}
+      </div>
+    );
+  };
 
 
 
 
 
 // And now we can use these
-const Create = () => {
-
+const FormNewQanda = () => {
 
     const { getAccessTokenSilently } = useAuth0();
-
 
     const handleSubmit = async (values, { setSubmitting }) => {
         // Submitting for data to the server
@@ -82,9 +59,6 @@ const Create = () => {
                     scope: AUTH_SCOPE
                 },
             });
-    
-            console.log("tok", accessToken)
-    
             const response = await fetch(API_URL + "/qandas/", {
                 method: 'POST',
                 headers: {
@@ -106,89 +80,49 @@ const Create = () => {
     
         // Set isSubmitting to false when the form submission is complete
         setSubmitting(false);
-    
     }
     
 
 
-
-
-
-
-
   return (
-    <>
-      <h1>Subscribe!</h1>
+    <div className="flex flex-row gap-3 mx-3 items-center">
+      <h1 className="font-bold">New Category</h1>
       <Formik
         initialValues={{
           question: '',
           answer: '',
-          acceptedTerms: false, // added for our checkbox
-          jobType: '', // added for our select
+          note: '',       
         }}
         validationSchema={Yup.object({
-            question: Yup.string()
-            .max(15, 'Must be 15 characters or less')
-            .required('Required'),
-            answer: Yup.string()
+            name: Yup.string()
             .max(20, 'Must be 20 characters or less')
-            .required('Required'),
-          email: Yup.string()
-            .email('Invalid email address')
-            .required('Required'),
-          acceptedTerms: Yup.boolean()
             .required('Required')
-            .oneOf([true], 'You must accept the terms and conditions.'),
-          jobType: Yup.string()
-            .oneOf(
-              ['designer', 'development', 'product', 'other'],
-              'Invalid Job Type'
-            )
-            .required('Required'),
         })}
         onSubmit={handleSubmit}
       >
 
-        <Form>
+        <Form className="flex flex-row">
           <MyTextInput
-            label="Question"
-            name="question"
+            label="Name"
+            name="name"
             type="text"
-            placeholder="question"
+            placeholder="name"
           />
 
-          <MyTextInput
-            label="Answer"
-            name="answer"
-            type="text"
-            placeholder="answer"
-          />
-
-          <MyTextInput
-            label="Email Address"
-            name="email"
-            type="email"
-            placeholder="jane@formik.com"
-          />
-
-          <MySelect label="Job Type" name="jobType">
+          <MySelect label="Category" name="category">
             <option value="">Select a job type</option>
             <option value="designer">Designer</option>
             <option value="development">Developer</option>
             <option value="product">Product Manager</option>
             <option value="other">Other</option>
           </MySelect>
-
-          <MyCheckbox name="acceptedTerms">
-            I accept the terms and conditions
-          </MyCheckbox>
-
-          <button type="submit">Submit</button>
+          
+          <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-0 px-2 rounded mx-2 my-3">Create</button>
         </Form>
       </Formik>
-    </>
+    </div>
   );
 };
 
-export default Create;
+export default FormNewQanda;
 

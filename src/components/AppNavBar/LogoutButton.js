@@ -1,6 +1,6 @@
 import React from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import { REACT_ROUTER_BASENAME } from "../config"
+import { REACT_ROUTER_BASENAME } from "../../config"
 
 const REACT_APP_REDIRECT_URI=window.location.origin + REACT_ROUTER_BASENAME
 

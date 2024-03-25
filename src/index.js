@@ -1,5 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { Provider } from 'react-redux';
+import { store } from './redux/store';
 import './index.css';
 import App from './App';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
@@ -27,8 +29,10 @@ root.render(
         scope:AUTH_SCOPE
       }}
       >
-
+      <Provider store={store}>
         <App />
+      </Provider>
+
 
     </Auth0Provider>
   </React.StrictMode>

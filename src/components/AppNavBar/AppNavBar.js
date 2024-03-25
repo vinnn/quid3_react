@@ -3,17 +3,20 @@ import Profile from "./Profile";
 import { useAuth0 } from "@auth0/auth0-react";
 import { NavLink, useLocation } from "react-router-dom";
 
+import { useSelector } from 'react-redux';
 
-export default function NavBar() {
 
-    const { isAuthenticated } = useAuth0();
-    let location = useLocation();
+export default function AppNavBar() {
 
-    let selectedTabStyle = {
-        // visibility: 'hidden'
-        'fontWeight': '900',
-        'color': 'blue'
-     }
+    // const { isAuthenticated } = useAuth0();
+    const { isAuthenticated, isLoading } = useSelector(state=>state.auth)
+
+    const setLinkActiveStyle = (isActive) => {
+        return {
+          fontWeight: isActive ? "700" : "",
+          color: isActive ? "blue" : "black",
+        };
+    }
 
     return (          
         <div className="border-solid border-2 border-indigo-600">
@@ -24,16 +27,16 @@ export default function NavBar() {
                     <nav variant="pills" className="navbar" style={{ borderBottom: "1px solid white" }}>
                         <ul className="nav nav-pills flex flex-row gap-3">
                             <li>
-                                <NavLink style={location.pathname === "/" ? selectedTabStyle:{}} to="/">Home</NavLink>
+                                <NavLink style={({ isActive }) => setLinkActiveStyle(isActive)} to="/">Home</NavLink>
                             </li>
                             <li>
-                                <NavLink style={location.pathname === "/play" ? selectedTabStyle:{}} to="/play">Play</NavLink>
+                                <NavLink style={({ isActive }) => setLinkActiveStyle(isActive)} to="/play">Play</NavLink>
                             </li>
                             <li>
-                                <NavLink style={location.pathname === "/stats" ? selectedTabStyle:{}} to="/stats">Stats</NavLink>
+                                <NavLink style={({ isActive }) => setLinkActiveStyle(isActive)} to="/stats">Stats</NavLink>
                             </li>                            
                             <li>
-                                <NavLink style={location.pathname === "/admin" ? selectedTabStyle:{}} to="/admin">Admin</NavLink>
+                                <NavLink style={({ isActive }) => setLinkActiveStyle(isActive)} to="/admin">Admin</NavLink>
                             </li>                      
                         </ul>
                     </nav>
