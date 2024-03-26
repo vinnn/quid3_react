@@ -1,7 +1,5 @@
 import { NavLink, useLocation } from "react-router-dom";
-import ButtonNewCategory from './ButtonNewCategory';
-import ButtonNewQanda from './ButtonNewQanda';
-import ButtonNewGame from './ButtonNewGame';
+
 
 export default function AdminNavBar() {
 
@@ -34,11 +32,6 @@ export default function AdminNavBar() {
 
 
 
-                <div>
-                    <ButtonNewCategory />
-                    <ButtonNewQanda />
-                    <ButtonNewGame />                
-                </div>
             </div>
         </div>
     )

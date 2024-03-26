@@ -12,11 +12,9 @@ const MyTextInput = ({ label, ...props }) => {
   // message if the field is invalid and it has been touched (i.e. visited)
   const [field, meta] = useField(props);
   return (
-    <div className="flex flex-row items-center gap-4 justify-center text-center">
-      <label className="px-2" htmlFor={props.id || props.name}>{label}</label>
-      <input className="text-input text-center" {...field} {...props} 
-    //   onChange={e => { field.onChange(props.name)(e.target.value + 'rrr')}}
-      />
+    <div className="flex flex-row items-center gap-4">
+      <label className="w-[100px] ml-2" htmlFor={props.id || props.name}>{label}</label>
+      <input className="text-input text-center min-w-[300px]" {...field} {...props} />
       {meta.touched && meta.error ? (
         <div className="error">{meta.error}</div>
       ) : null}
@@ -27,15 +25,15 @@ const MyTextInput = ({ label, ...props }) => {
 const MySelect = ({ label, ...props }) => {
     const [field, meta] = useField(props);
     return (
-      <div className="flex flex-row items-center gap-4 justify-center text-center">
-        <label className="text-center" htmlFor={props.id || props.name}>{label}</label>
-        <select className="text-center" {...field} {...props} />
+      <div className="flex flex-row items-center gap-4">
+        <label className="w-[100px] ml-2" htmlFor={props.id || props.name}>{label}</label>
+        <select className="w-[180px] text-center" {...field} {...props} />
         {meta.touched && meta.error ? (
           <div className="error">{meta.error}</div>
         ) : null}
       </div>
     );
-  };
+};
 
 
 // And now we can use these
@@ -45,6 +43,8 @@ const NewQandaForm = () => {
     const { getAccessTokenSilently } = useAuth0();
     const categories = useSelector(getAllCategories)
     const [addRequestStatus, setAddRequestStatus] = useState('idle')
+
+    console.log("categories", categories)
 
     const handleSubmit = async (values) => {
         console.log("values", values)
@@ -63,11 +63,14 @@ const NewQandaForm = () => {
     }
 
   return (
-    <div className="flex flex-row gap-3 mx-3 items-center">
-      <h1 className="font-bold">New Qanda</h1>
+    <div className="gap-3 mx-3 items-center">
+        <div className="w-[250px]">
+            <h1 className="font-bold bg-amber-300">New Qanda</h1>
+        </div>
+      
       <Formik
         initialValues={{
-          category: categories ? categories[0] : '',
+          category: categories ? categories[0].name : '',
           question: '',
           answer: '',
           note: ''
@@ -76,23 +79,22 @@ const NewQandaForm = () => {
             category: Yup.string()
             .required('Required'),
             question: Yup.string()
-            .max(20, 'Must be 20 characters or less')
+            .max(200, 'Must be 20 characters or less')
             .required('Required'),
             answer: Yup.string()
-            .max(20, 'Must be 20 characters or less')
+            .max(200, 'Must be 20 characters or less')
             .required('Required'),
             note: Yup.string()
-            .max(20, 'Must be 20 characters or less')
-            .required('Required')
+            .max(200, 'Must be 20 characters or less')
         })}
         onSubmit={handleSubmit}
       >
 
-        <Form className="flex flex-row">
+        <Form className="border-solid border-2 border-blue ">
 
-            <MySelect label="Category" name="category">
+            <MySelect label="category" name="category">
                 {categories.map((category) => (
-                    <option value={category.name}> {category.name} </option>
+                    <option className="text-center" value={category.name}> {category.name} </option>
                 ))}
             </MySelect>
 
@@ -117,7 +119,7 @@ const NewQandaForm = () => {
                 placeholder="note"
             />
 
-            <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-0 px-2 rounded mx-2 my-3">Create</button>
+            <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-0 px-20 rounded ml-3  mt-1 mb-4">Create</button>
         </Form>
       </Formik>
     </div>

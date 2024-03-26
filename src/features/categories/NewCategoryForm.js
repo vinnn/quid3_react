@@ -13,10 +13,8 @@ const MyTextInput = ({ label, ...props }) => {
   const [field, meta] = useField(props);
   return (
     <div className="flex flex-row items-center gap-4">
-      <label htmlFor={props.id || props.name}>{label}</label>
-      <input className="text-input text-center" {...field} {...props} 
-    //   onChange={e => { field.onChange(props.name)(e.target.value + 'rrr')}}
-      />
+      <label className="w-[100px] ml-2" htmlFor={props.id || props.name}>{label}</label>
+      <input className="text-input text-center" {...field} {...props} />
       {meta.touched && meta.error ? (
         <div className="error">{meta.error}</div>
       ) : null}
@@ -24,7 +22,7 @@ const MyTextInput = ({ label, ...props }) => {
   );
 };
 
-// And now we can use these
+
 const NewCategoryForm = () => {
 
     const dispatch = useDispatch()
@@ -47,30 +45,34 @@ const NewCategoryForm = () => {
     }
 
   return (
-    <div className="flex flex-row gap-3 mx-3 items-center">
-      <h1 className="font-bold">New Category</h1>
-      <Formik
-        initialValues={{
-          name: ''
-        }}
-        validationSchema={Yup.object({
-            name: Yup.string()
-            .max(20, 'Must be 20 characters or less')
-            .required('Required')
-        })}
-        onSubmit={handleSubmit}
-      >
-
-        <Form className="flex flex-row">
-          <MyTextInput
-            label="Name"
-            name="name"
-            type="text"
-            placeholder="name"
-          />
-          <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-0 px-2 rounded mx-2 my-3">Create</button>
-        </Form>
-      </Formik>
+    <div className="gap-3 mx-3 items-center">
+        <div className="w-[250px]">
+            <h1 className="font-bold bg-amber-300">New Category</h1>
+        </div>
+      
+        <div>
+            <Formik
+                initialValues={{
+                    name: ''
+                }}
+                validationSchema={Yup.object({
+                    name: Yup.string()
+                    .max(20, 'Must be 20 characters or less')
+                    .required('Required')
+                })}
+                onSubmit={handleSubmit}
+            >
+                <Form className="">
+                    <MyTextInput
+                        label="name"
+                        name="name"
+                        type="text"
+                        placeholder="category"
+                    />
+                    <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-0 px-20 rounded ml-3  mt-1 mb-4">Create</button>           
+                </Form>
+            </Formik>
+        </div>
     </div>
   );
 };

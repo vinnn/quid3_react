@@ -12,7 +12,7 @@ const QandasTable = () => {
     const qandasErrors = useSelector(getQandasError)
 
     return (        
-        <Table headList={["Category", "Q", "A", "Note"]} dataList={qandas} dataKeysList={["category", "question", "answer", "note"]} status={qandasStatus} />
+        <Table headList={["Category", "Q", "A", "Note"]} dataList={qandas} dataKeysList={["category name", "question", "answer", "note"]} status={qandasStatus} />
     )
 }
 

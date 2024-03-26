@@ -4,6 +4,13 @@ const Table = ( { headList, dataList, dataKeysList, status } ) => {
     console.log("dataList", dataList)
     console.log("dataKeysList", dataKeysList)
 
+    headList = [...headList, ""]
+
+    const handleDeleteRow = (e) => {
+        console.log("handle delete of index", e.target.id)
+    }
+
+
     return (
 
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -35,8 +42,14 @@ const Table = ( { headList, dataList, dataKeysList, status } ) => {
                             <tr key={i} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                 {/* <th scope="row" className="px-6 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"> {data[dataKeysList[0]]} </th> */}
                                 {dataKeysList.map((key,i) => (
-                                    <td key={i} className="px-6 py-2"> {data[key]} </td>
+                                    <td key={i} className="px-6 py-2"> 
+                                        {data[key]} 
+                                        
+                                    </td>
                                 ))}
+                                    <td key={i} className="font-medium text-blue-600 dark:text-blue-500 hover:font-bold" onClick={handleDeleteRow} id={i}>
+                                        delete
+                                    </td>
                             </tr>
                             ))
                         ) : (
