@@ -18,6 +18,8 @@ import { REACT_ROUTER_BASENAME } from "./config"
 import useAuthListener from './features/auth/useAuthListener'
 import { authState } from './features/auth/authSlice'
 import { fetchQandas } from "./features/qandas/qandasSlice";
+import { fetchCategories } from "./features/categories/categoriesSlice"; 
+
 
 function App() {
   const auth = useAuthListener()   // Listening if Auth state has changed
@@ -29,6 +31,7 @@ function App() {
   useEffect( () => {
     if(isAuthenticated) {
         dispatch( fetchQandas(getAccessTokenSilently) )
+        dispatch( fetchCategories(getAccessTokenSilently) )
     }
   }, [isAuthenticated, getAccessTokenSilently])
 

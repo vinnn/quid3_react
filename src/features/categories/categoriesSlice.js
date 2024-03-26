@@ -7,12 +7,12 @@ const AUTH_SCOPE = REACT_APP_AUTH0_SCOPE;
 const API_URL = REACT_APP_API_SERVER_URL;
 
 const initialState = { 
-    qandas: [],
+    categories: [],
     status: 'idle',
     error: null
 }
 
-export const fetchQandas = createAsyncThunk('qandas/fetchQandas', async (getAccessTokenSilently) => {    
+export const fetchCategories = createAsyncThunk('categories/fetchCategories', async (getAccessTokenSilently) => {    
     try {
         const accessToken = await getAccessTokenSilently({
             authorizationParams: {
@@ -23,15 +23,19 @@ export const fetchQandas = createAsyncThunk('qandas/fetchQandas', async (getAcce
         const headers = {
             Authorization: `Bearer ${accessToken}`
         }
-        const response = await axios.get(API_URL + "/qandas/", { headers })
-        const response_data = await response.data[0]["qandas"];
+        const response = await axios.get(API_URL + "/categories/", { headers })
+        console.log("response", response)
+
+        const response_data = await response.data[0]["categories"];
+        console.log("response_data", response_data)
+
         return [...response_data]
     } catch (err) {
         return err.message;
     }
 })
 
-export const postNewQanda = createAsyncThunk('qandas/postNewQanda', async (postArgs) => {
+export const postNewCategory = createAsyncThunk('categories/postNewCategory', async (postArgs) => {
     try {
         const { getAccessTokenSilently, body } = postArgs
 
@@ -45,7 +49,7 @@ export const postNewQanda = createAsyncThunk('qandas/postNewQanda', async (postA
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${accessToken}`
         }
-        const response = await axios.post(API_URL + "/qandas/", body, { headers })
+        const response = await axios.post(API_URL + "/categories/", body, { headers })
         console.log("response.data", response.data)
 
         return response.data
@@ -57,8 +61,12 @@ export const postNewQanda = createAsyncThunk('qandas/postNewQanda', async (postA
 
 
 
-const qandasSlice = createSlice({
-    name: "qandas",
+
+
+
+
+const categoriesSlice = createSlice({
+    name: "categories",
     initialState,
     reducers: {
         // qandasAdded: {
@@ -78,33 +86,45 @@ const qandasSlice = createSlice({
     },
     extraReducers(builder) {
         builder
-            .addCase(fetchQandas.pending, (state, action) => {
+            .addCase(fetchCategories.pending, (state, action) => {
                 console.log('loading')
                 state.status = 'loading'
             })
-            .addCase(fetchQandas.fulfilled, (state, action) => {
+            .addCase(fetchCategories.fulfilled, (state, action) => {
                 state.status = 'succeeded'
-                state.qandas = action.payload.map(qanda => {
-                    return qanda;
+                state.categories = action.payload.map(category => {
+                    return category;
                 });
             })
-            .addCase(fetchQandas.rejected, (state, action) => {
+            .addCase(fetchCategories.rejected, (state, action) => {
                 console.log('failed')
                 state.status = 'failed'
                 state.error = action.error.message
             })
-            .addCase(postNewQanda.fulfilled, (state, action) => {
-                console.log("qanda lklk", action.payload)
-                state.qandas.push(action.payload[0].qanda)
+            .addCase(postNewCategory.fulfilled, (state, action) => {
+                console.log("lklk", action.payload)
+                state.categories.push(action.payload[0].category)
+
+                // action.payload.userId = Number(action.payload.userId)
+                // action.payload.date = new Date().toISOString();
+                // // since the 'mock' api we are using is not returning 
+                // // reactions, we are giving that here:
+                // action.payload.reactions = { thumbsUp: 0, wow: 0, heart: 0, rocket: 0, coffee: 0 }
+                // console.log(action.payload)
+                // state.posts.push(action.payload)
+
+
+
+
             })
     }
 })
 
-export const getAllQandas = (state) => state.qandas.qandas
-export const getQandasStatus = (state) => state.qandas.status
-export const getQandasError = (state) => state.qandas.error
+export const getAllCategories = (state) => state.categories.categories
+export const getCategoriesStatus = (state) => state.categories.status
+export const getCategoriesError = (state) => state.categories.error
 
-// export const { qandasAdded } = qandasSlice.actions
+// export const { categoriesAdded } = categoriesSlice.actions
 
-export default qandasSlice.reducer
+export default categoriesSlice.reducer
 
