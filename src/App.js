@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route, NavLink, useLocation } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { useAuth0 } from "@auth0/auth0-react";
 
 import LoginButton from "./features/auth/LoginButton";
 import AppNavBar from './components/AppNavBar/AppNavBar';
@@ -16,11 +17,23 @@ import { REACT_ROUTER_BASENAME } from "./config"
 
 import useAuthListener from './features/auth/useAuthListener'
 import { authState } from './features/auth/authSlice'
-
+import { fetchQandas } from "./features/qandas/qandasSlice";
 
 function App() {
   const auth = useAuthListener()   // Listening if Auth state has changed
   const { isAuthenticated, isLoading } = useSelector(authState)
+
+  // fetch data
+  const dispatch = useDispatch();
+  const { getAccessTokenSilently } = useAuth0();
+  useEffect( () => {
+    if(isAuthenticated) {
+        dispatch( fetchQandas(getAccessTokenSilently) )
+    }
+  }, [isAuthenticated, getAccessTokenSilently])
+
+
+
 
   return (
     <div className="App">

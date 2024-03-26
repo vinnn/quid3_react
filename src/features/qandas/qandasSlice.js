@@ -53,21 +53,21 @@ const qandasSlice = createSlice({
     },
     extraReducers(builder) {
         builder
-            // .addCase(fetchQandas.pending, (state, action) => {
-            //     console.log('loading')
-            //     state.status = 'loading'
-            // })
+            .addCase(fetchQandas.pending, (state, action) => {
+                console.log('loading')
+                state.status = 'loading'
+            })
             .addCase(fetchQandas.fulfilled, (state, action) => {
                 state.status = 'succeeded'
                 state.qandas = action.payload.map(qanda => {
                     return qanda;
                 });
             })
-            // .addCase(fetchQandas.rejected, (state, action) => {
-            //     console.log('failed')
-            //     state.status = 'failed'
-            //     state.error = action.error.message
-            // })
+            .addCase(fetchQandas.rejected, (state, action) => {
+                console.log('failed')
+                state.status = 'failed'
+                state.error = action.error.message
+            })
             // .addCase(postNewQanda.fulfilled, (state, action) => {
             //     console.log(action.payload)
             //     state.posts.push(action.payload)
