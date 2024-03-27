@@ -44,7 +44,8 @@ const NewQandaForm = () => {
     const categories = useSelector(getAllCategories)
     const [addRequestStatus, setAddRequestStatus] = useState('idle')
 
-    console.log("categories", categories)
+    // include an empty option to force deliberate user selection
+    const category_options = [{"name": ""}, ...categories]
 
     const handleSubmit = async (values) => {
         console.log("values", values)
@@ -70,13 +71,14 @@ const NewQandaForm = () => {
       
       <Formik
         initialValues={{
-          category: categories ? categories[0].name : '',
+          category: '',
           question: '',
           answer: '',
           note: ''
         }}
         validationSchema={Yup.object({
             category: Yup.string()
+            .min(1, 'Must be 1 character or more')
             .required('Required'),
             question: Yup.string()
             .max(200, 'Must be 20 characters or less')
@@ -93,8 +95,8 @@ const NewQandaForm = () => {
         <Form className="border-solid border-2 border-blue ">
 
             <MySelect label="category" name="category">
-                {categories.map((category) => (
-                    <option className="text-center" value={category.name}> {category.name} </option>
+                {category_options.map((category, i) => (
+                    <option key={i} className="text-center" value={category.name}> {category.name} </option>
                 ))}
             </MySelect>
 

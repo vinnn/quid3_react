@@ -27,7 +27,7 @@ const Table = ( { headList, dataList, dataKeysList, status } ) => {
                     <tr>
                         {headList ? (
                             headList.map((head, i) => (
-                                <th scope="col" className="px-6 py-2"> {head} </th>
+                                <th key={i} scope="col" className="px-6 py-2"> {head} </th>
                             ))
                         ) : (
                             null

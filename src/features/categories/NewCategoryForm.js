@@ -14,7 +14,7 @@ const MyTextInput = ({ label, ...props }) => {
   return (
     <div className="flex flex-row items-center gap-4">
       <label className="w-[100px] ml-2" htmlFor={props.id || props.name}>{label}</label>
-      <input className="text-input text-center" {...field} {...props} />
+      <input className="text-input text-center min-w-[300px]" {...field} {...props} />
       {meta.touched && meta.error ? (
         <div className="error">{meta.error}</div>
       ) : null}
