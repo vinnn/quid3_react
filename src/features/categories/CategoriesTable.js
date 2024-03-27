@@ -7,12 +7,14 @@ import Table from "../../components/Table"
 
 
 const CategoriesTable = () => {
-    const data = useSelector(getAllCategories)
+    const categories = useSelector(getAllCategories)
     const status = useSelector(getCategoriesStatus)
     const errors = useSelector(getCategoriesError)
 
     const dispatch = useDispatch();
     const { getAccessTokenSilently } = useAuth0();
+
+    const dataList = categories
 
     const handleDeleteRow = (e) => {
         const delete_args = {
@@ -24,7 +26,7 @@ const CategoriesTable = () => {
 
 
     return (        
-        <Table headList={["Category", "id"]} dataList={data} dataKeysList={["name", "id"]} status={status} handleDeleteRow={handleDeleteRow} />
+        <Table headList={["Category", "id"]} dataList={dataList} dataKeysList={["name", "id"]} status={status} handleDeleteRow={handleDeleteRow} />
     )
 }
 

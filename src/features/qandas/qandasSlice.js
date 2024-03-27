@@ -25,6 +25,9 @@ export const fetchQandas = createAsyncThunk('qandas/fetchQandas', async (getAcce
         }
         const response = await axios.get(API_URL + "/qandas/", { headers })
         const response_data = await response.data[0]["qandas"];
+
+        console.log("response_data", response_data)
+
         return response_data ? [...response_data] : []
 
     } catch (err) {
@@ -35,6 +38,8 @@ export const fetchQandas = createAsyncThunk('qandas/fetchQandas', async (getAcce
 export const postNewQanda = createAsyncThunk('qandas/postNewQanda', async (postArgs) => {
     try {
         const { getAccessTokenSilently, body } = postArgs
+
+        console.log("body", body)
 
         const accessToken = await getAccessTokenSilently({
             authorizationParams: {
@@ -126,7 +131,7 @@ const qandasSlice = createSlice({
             .addCase(deleteQanda.fulfilled, (state, action) => {
                 console.log("action.payload", action.payload)
                 if (action.payload && action.payload[0].id) {
-                    state.qandas = state.qandas.filter((q) => q.id != action.payload[0].id)
+                    state.qandas = state.qandas.filter((q) => q.id !== action.payload[0].id)
                 }
             })
     }

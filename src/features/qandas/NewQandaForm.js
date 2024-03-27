@@ -71,14 +71,13 @@ const NewQandaForm = () => {
       
       <Formik
         initialValues={{
-          category: '',
+          category_id: '',
           question: '',
           answer: '',
           note: ''
         }}
         validationSchema={Yup.object({
-            category: Yup.string()
-            .min(1, 'Must be 1 character or more')
+          category_id: Yup.number().integer()
             .required('Required'),
             question: Yup.string()
             .max(200, 'Must be 20 characters or less')
@@ -94,9 +93,9 @@ const NewQandaForm = () => {
 
         <Form className="border-solid border-2 border-blue ">
 
-            <MySelect label="category" name="category">
+            <MySelect label="category" name="category_id">
                 {category_options.map((category, i) => (
-                    <option key={i} className="text-center" value={category.name}> {category.name} </option>
+                    <option key={i} className="text-center" value={category.id}> {category.name} </option>
                 ))}
             </MySelect>
 
