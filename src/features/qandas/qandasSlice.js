@@ -25,7 +25,8 @@ export const fetchQandas = createAsyncThunk('qandas/fetchQandas', async (getAcce
         }
         const response = await axios.get(API_URL + "/qandas/", { headers })
         const response_data = await response.data[0]["qandas"];
-        return [...response_data]
+        return response_data ? [...response_data] : []
+
     } catch (err) {
         return err.message;
     }
@@ -46,15 +47,38 @@ export const postNewQanda = createAsyncThunk('qandas/postNewQanda', async (postA
             'Authorization': `Bearer ${accessToken}`
         }
         const response = await axios.post(API_URL + "/qandas/", body, { headers })
-        console.log("response.data", response.data)
+        if (response.data[1] === 200) {
+            return response.data
+        }
 
-        return response.data
     } catch (err) {
         return err.message;
     }
 })
 
+export const deleteQanda = createAsyncThunk('qandas/deleteQanda', async (deleteArgs) => {
+    try {
+        const { getAccessTokenSilently, id } = deleteArgs
 
+        const accessToken = await getAccessTokenSilently({
+            authorizationParams: {
+                audience: API_AUDIENCE,
+                scope: AUTH_SCOPE
+            },
+        });
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${accessToken}`
+        }
+        const response = await axios.delete(API_URL + "/qandas/" + id, { headers })
+        if (response.data[1] === 200) {
+            return response.data
+        }
+
+    } catch (err) {
+        return err.message;
+    }
+})
 
 
 const qandasSlice = createSlice({
@@ -94,8 +118,16 @@ const qandasSlice = createSlice({
                 state.error = action.error.message
             })
             .addCase(postNewQanda.fulfilled, (state, action) => {
-                console.log("qanda lklk", action.payload)
-                state.qandas.push(action.payload[0].qanda)
+                console.log("action.payload", action.payload)
+                if (action.payload) {
+                    state.qandas.push(action.payload[0].qanda)
+                }
+            })
+            .addCase(deleteQanda.fulfilled, (state, action) => {
+                console.log("action.payload", action.payload)
+                if (action.payload && action.payload[0].id) {
+                    state.qandas = state.qandas.filter((q) => q.id != action.payload[0].id)
+                }
             })
     }
 })

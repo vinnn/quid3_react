@@ -1,14 +1,26 @@
+// import { deleteQanda } from "../features/qandas/qandasSlice";
+// import { useAuth0 } from "@auth0/auth0-react";
+import { useSelector, useDispatch } from 'react-redux';
 
-const Table = ( { headList, dataList, dataKeysList, status } ) => {
+
+const Table = ( { headList, dataList, dataKeysList, status, handleDeleteRow } ) => {
+
+    // const dispatch = useDispatch();
+    // const { getAccessTokenSilently } = useAuth0();
+
 
     console.log("dataList", dataList)
     console.log("dataKeysList", dataKeysList)
 
     headList = [...headList, ""]
 
-    const handleDeleteRow = (e) => {
-        console.log("handle delete of index", e.target.id)
-    }
+    // const handleDeleteRow = (e) => {
+    //     const delete_args = {
+    //         "getAccessTokenSilently": getAccessTokenSilently,
+    //         "id": e.target.id
+    //     }
+    //     dispatch(deleteQanda(delete_args))
+    // }
 
 
     return (
@@ -47,7 +59,7 @@ const Table = ( { headList, dataList, dataKeysList, status } ) => {
                                         
                                     </td>
                                 ))}
-                                    <td key={i} className="font-medium text-blue-600 dark:text-blue-500 hover:font-bold" onClick={handleDeleteRow} id={i}>
+                                    <td key={i} className="font-medium text-blue-600 dark:text-blue-500 hover:font-bold" onClick={handleDeleteRow} id={data.id}>
                                         delete
                                     </td>
                             </tr>

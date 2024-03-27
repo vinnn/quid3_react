@@ -24,12 +24,9 @@ export const fetchCategories = createAsyncThunk('categories/fetchCategories', as
             Authorization: `Bearer ${accessToken}`
         }
         const response = await axios.get(API_URL + "/categories/", { headers })
-        console.log("response", response)
-
         const response_data = await response.data[0]["categories"];
-        console.log("response_data", response_data)
+        return response_data ? [...response_data] : []
 
-        return [...response_data]
     } catch (err) {
         return err.message;
     }
@@ -50,14 +47,38 @@ export const postNewCategory = createAsyncThunk('categories/postNewCategory', as
             'Authorization': `Bearer ${accessToken}`
         }
         const response = await axios.post(API_URL + "/categories/", body, { headers })
-        console.log("response.data", response.data)
+        if (response.data[1] === 200) {
+            return response.data
+        }
 
-        return response.data
     } catch (err) {
         return err.message;
     }
 })
 
+export const deleteCategory = createAsyncThunk('qandas/deleteCategory', async (deleteArgs) => {
+    try {
+        const { getAccessTokenSilently, id } = deleteArgs
+
+        const accessToken = await getAccessTokenSilently({
+            authorizationParams: {
+                audience: API_AUDIENCE,
+                scope: AUTH_SCOPE
+            },
+        });
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${accessToken}`
+        }
+        const response = await axios.delete(API_URL + "/categories/" + id, { headers })
+        if (response.data[1] === 200) {
+            return response.data
+        }
+
+    } catch (err) {
+        return err.message;
+    }
+})
 
 
 
@@ -102,21 +123,17 @@ const categoriesSlice = createSlice({
                 state.error = action.error.message
             })
             .addCase(postNewCategory.fulfilled, (state, action) => {
-                console.log("lklk", action.payload)
-                state.categories.push(action.payload[0].category)
-
-                // action.payload.userId = Number(action.payload.userId)
-                // action.payload.date = new Date().toISOString();
-                // // since the 'mock' api we are using is not returning 
-                // // reactions, we are giving that here:
-                // action.payload.reactions = { thumbsUp: 0, wow: 0, heart: 0, rocket: 0, coffee: 0 }
-                // console.log(action.payload)
-                // state.posts.push(action.payload)
-
-
-
-
+                console.log("action.payload", action.payload)
+                if (action.payload) {
+                    state.categories.push(action.payload[0].category)
+                }
             })
+            .addCase(deleteCategory.fulfilled, (state, action) => {
+                console.log("action.payload", action.payload)
+                if (action.payload && action.payload[0].id) {
+                    state.categories = state.categories.filter((q) => q.id != action.payload[0].id)
+                }
+            })            
     }
 })
 
