@@ -4,15 +4,15 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useAuth0 } from "@auth0/auth0-react";
 
 import LoginButton from "./features/auth/LoginButton";
-import AppNavBar from './components/AppNavBar/AppNavBar';
-import Home from './components/Home/Home';
-import Play from './components/Play/Play';
-import Stats from './components/Stats/Stats';
-import Admin from './components/Admin/Admin';
-import Qandas from './components/Admin/Qandas';
-import NoMatch from './components/NoMatch';
-import Categories from "./components/Admin/Categories";
-import Games from "./components/Admin/Games";
+import AppNavBar from './routing/AppNavBar';
+import Home from './routing/Home';
+import Play from './routing/Play';
+import Stats from './routing/Stats';
+import Admin from './routing/Admin';
+import Qandas from './routing/Qandas';
+import NoMatch from './routing/NoMatch';
+import Categories from "./routing/Categories";
+import Games from "./routing/Games";
 import { REACT_ROUTER_BASENAME } from "./config"
 
 import useAuthListener from './features/auth/useAuthListener'

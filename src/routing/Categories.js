@@ -1,5 +1,5 @@
 import React from "react";
-import CategoriesTable from "../../features/categories/CategoriesTable"
+import CategoriesTable from "../features/categories/CategoriesTable"
 
 const Categories = () => {
         return (
