@@ -62,7 +62,7 @@ const NewCategoryForm = () => {
                 })}
                 onSubmit={handleSubmit}
             >
-                <Form className="">
+                <Form className="border-solid border-2 border-blue ">
                     <MyTextInput
                         label="name"
                         name="name"

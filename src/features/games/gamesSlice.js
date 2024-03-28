@@ -7,12 +7,12 @@ const AUTH_SCOPE = REACT_APP_AUTH0_SCOPE;
 const API_URL = REACT_APP_API_SERVER_URL;
 
 const initialState = { 
-    qandas: [],
+    games: [],
     status: 'idle',
     error: null
 }
 
-export const fetchQandas = createAsyncThunk('qandas/fetchQandas', async (getAccessTokenSilently) => {    
+export const fetchGames = createAsyncThunk('games/fetchGames', async (getAccessTokenSilently) => {    
     try {
         const accessToken = await getAccessTokenSilently({
             authorizationParams: {
@@ -23,8 +23,8 @@ export const fetchQandas = createAsyncThunk('qandas/fetchQandas', async (getAcce
         const headers = {
             Authorization: `Bearer ${accessToken}`
         }
-        const response = await axios.get(API_URL + "/qandas/", { headers })
-        const response_data = await response.data[0]["qandas"];
+        const response = await axios.get(API_URL + "/games/", { headers })
+        const response_data = await response.data[0]["games"];
 
         console.log("response_data", response_data)
 
@@ -35,7 +35,7 @@ export const fetchQandas = createAsyncThunk('qandas/fetchQandas', async (getAcce
     }
 })
 
-export const postNewQanda = createAsyncThunk('qandas/postNewQanda', async (postArgs) => {
+export const postNewGame = createAsyncThunk('games/postNewGame', async (postArgs) => {
     try {
         const { getAccessTokenSilently, body } = postArgs
 
@@ -51,7 +51,10 @@ export const postNewQanda = createAsyncThunk('qandas/postNewQanda', async (postA
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${accessToken}`
         }
-        const response = await axios.post(API_URL + "/qandas/", body, { headers })
+        const response = await axios.post(API_URL + "/games/", body, { headers })
+
+        console.log("response", response)
+
         if (response.data[1] === 200) {
             return response.data
         }
@@ -61,7 +64,7 @@ export const postNewQanda = createAsyncThunk('qandas/postNewQanda', async (postA
     }
 })
 
-export const deleteQanda = createAsyncThunk('qandas/deleteQanda', async (deleteArgs) => {
+export const deleteGame = createAsyncThunk('games/deleteGame', async (deleteArgs) => {
     try {
         const { getAccessTokenSilently, id } = deleteArgs
 
@@ -75,7 +78,7 @@ export const deleteQanda = createAsyncThunk('qandas/deleteQanda', async (deleteA
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${accessToken}`
         }
-        const response = await axios.delete(API_URL + "/qandas/" + id, { headers })
+        const response = await axios.delete(API_URL + "/games/" + id, { headers })
         if (response.data[1] === 200) {
             return response.data
         }
@@ -86,8 +89,8 @@ export const deleteQanda = createAsyncThunk('qandas/deleteQanda', async (deleteA
 })
 
 
-const qandasSlice = createSlice({
-    name: "qandas",
+const gamesSlice = createSlice({
+    name: "games",
     initialState,
     reducers: {
         // qandasAdded: {
@@ -104,49 +107,57 @@ const qandasSlice = createSlice({
         //         }
         //     }
         // }
-        selectQanda: {
+        selectGame: {
             reducer(state, action){
-                state.qandas = state.qandas.map((q) => (q.id==action.payload)? {...q, "selected": !q.selected } : q )
+                state.games = state.games.map((q) => (q.id==action.payload)? {...q, "selected": !q.selected } : q )
             },
         }
     },
     extraReducers(builder) {
         builder
-            .addCase(fetchQandas.pending, (state, action) => {
+            .addCase(fetchGames.pending, (state, action) => {
                 console.log('loading')
                 state.status = 'loading'
             })
-            .addCase(fetchQandas.fulfilled, (state, action) => {
+            .addCase(fetchGames.fulfilled, (state, action) => {
+                console.log("state.games", state.games)   
                 state.status = 'succeeded'
-                state.qandas = action.payload.map(qanda => {
-                    return {...qanda, "selected": false};
+                state.games = action.payload.map(game => {
+                    return {...game, "selected": false};
                 });
             })
-            .addCase(fetchQandas.rejected, (state, action) => {
+            .addCase(fetchGames.rejected, (state, action) => {
                 console.log('failed')
                 state.status = 'failed'
                 state.error = action.error.message
             })
-            .addCase(postNewQanda.fulfilled, (state, action) => {
+            .addCase(postNewGame.fulfilled, (state, action) => {
                 console.log("action.payload", action.payload)
-                if (action.payload) {
-                    state.qandas.push(action.payload[0].qanda)
+                console.log("state.games", state.games)           
+                if (action.payload && action.payload[0].game) {
+                    const new_game = action.payload[0].game
+                    state.games.push({
+                        "id": new_game.id,
+                        "name": new_game.name,
+                        "qanda_ids": new_game.qanda_ids,
+                        "extra_qandas": new_game.extra_qandas
+                    })
                 }
             })
-            .addCase(deleteQanda.fulfilled, (state, action) => {
+            .addCase(deleteGame.fulfilled, (state, action) => {
                 console.log("action.payload", action.payload)
                 if (action.payload && action.payload[0].id) {
-                    state.qandas = state.qandas.filter((q) => q.id !== action.payload[0].id)
+                    state.games = state.games.filter((q) => q.id !== action.payload[0].id)
                 }
             })
     }
 })
 
-export const getAllQandas = (state) => state.qandas.qandas
-export const getQandasStatus = (state) => state.qandas.status
-export const getQandasError = (state) => state.qandas.error
+export const getAllGames = (state) => state.games.games
+export const getGamesStatus = (state) => state.games.status
+export const getGamesError = (state) => state.games.error
 
-export const { selectQanda } = qandasSlice.actions
+export const { selectGame } = gamesSlice.actions
 
-export default qandasSlice.reducer
+export default gamesSlice.reducer
 

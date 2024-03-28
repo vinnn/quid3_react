@@ -104,6 +104,11 @@ const categoriesSlice = createSlice({
         //         }
         //     }
         // }
+        selectCategory: {
+            reducer(state, action){
+                state.categories = state.categories.map((c) => (c.id==action.payload)? {...c, "selected": !c.selected } : c )
+            },
+        },
     },
     extraReducers(builder) {
         builder
@@ -114,7 +119,7 @@ const categoriesSlice = createSlice({
             .addCase(fetchCategories.fulfilled, (state, action) => {
                 state.status = 'succeeded'
                 state.categories = action.payload.map(category => {
-                    return category;
+                    return {...category, "selected": false};
                 });
             })
             .addCase(fetchCategories.rejected, (state, action) => {
@@ -141,7 +146,7 @@ export const getAllCategories = (state) => state.categories.categories
 export const getCategoriesStatus = (state) => state.categories.status
 export const getCategoriesError = (state) => state.categories.error
 
-// export const { categoriesAdded } = categoriesSlice.actions
+export const { selectCategory } = categoriesSlice.actions
 
 export default categoriesSlice.reducer
 

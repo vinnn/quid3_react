@@ -1,4 +1,4 @@
-import QandasTable from "../features/qandas/QandasTable"
+import GamesTable from "../features/games/GamesTable"
 
 
 export default function Games() {
@@ -6,7 +6,7 @@ export default function Games() {
     return (
         <div>
             {/* GAMES */}
-            {/* <QandasTable /> */}
+            <GamesTable />
         </div>
     )
 }

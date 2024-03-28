@@ -13,12 +13,15 @@ import Qandas from './routing/Qandas';
 import NoMatch from './routing/NoMatch';
 import Categories from "./routing/Categories";
 import Games from "./routing/Games";
+import Missions from './routing/Missions';
+import Training from './routing/Training';
 import { REACT_ROUTER_BASENAME } from "./config"
 
 import useAuthListener from './features/auth/useAuthListener'
 import { authState } from './features/auth/authSlice'
 import { fetchQandas } from "./features/qandas/qandasSlice";
 import { fetchCategories } from "./features/categories/categoriesSlice"; 
+import { fetchGames } from "./features/games/gamesSlice"; 
 
 
 function App() {
@@ -32,6 +35,7 @@ function App() {
     if(isAuthenticated) {
         dispatch( fetchQandas(getAccessTokenSilently) )
         dispatch( fetchCategories(getAccessTokenSilently) )
+        dispatch( fetchGames(getAccessTokenSilently) )
     }
   }, [isAuthenticated, getAccessTokenSilently])
 
@@ -48,7 +52,11 @@ function App() {
 
           <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/play" element={<Play />} />
+                <Route path="/play" element={<Play />}>
+                      <Route path="missions" element={<Missions />} />
+                      <Route path="training" element={<Training />} />
+                      <Route path="*" element={<NoMatch />} />
+                </Route>
                 <Route path="/stats" element={<Stats />} />
                 <Route path="/admin" element={<Admin />}>
                       <Route path="qandas" element={<Qandas />} />
